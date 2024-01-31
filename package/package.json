@@ -1,5 +1,5 @@
 {
-  "name": "ansi-logger",
+  "name": "logger-ansi",
   "version": "1.0.0",
   "description": "A terminal logger that uses ANSI Escape codes to add color to the terminal",
   "main": "ansi_logger.js",
