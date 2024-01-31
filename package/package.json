@@ -1,0 +1,23 @@
+{
+  "name": "ansi-logger",
+  "version": "1.0.0",
+  "description": "A terminal logger that uses ANSI Escape codes to add color to the terminal",
+  "main": "ansi_logger.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Constantin-Alexandru/ANSI-Logger.git"
+  },
+  "keywords": [
+    "ANSI",
+    "Logger"
+  ],
+  "author": "TheReal Infinite",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Constantin-Alexandru/ANSI-Logger/issues"
+  },
+  "homepage": "https://github.com/Constantin-Alexandru/ANSI-Logger#readme",
+  "dependencies": {
+    "ansi-lib": "^1.0.0"
+  }
+}
