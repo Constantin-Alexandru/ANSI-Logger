@@ -1,0 +1,4 @@
+[submodule "ANSI-Library"]
+	path = ANSI-Library
+	url = https://github.com/Constantin-Alexandru/ANSI-Library.git
+	branch = C-library
