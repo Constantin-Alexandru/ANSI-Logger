@@ -10,25 +10,18 @@
 //
 // The format modifiers available for the header:
 // %l -> Log level
-// %L -> Short log level
 // %n -> Logger name
 // %w -> Weekday
-// %W -> Abbreviated Weekday
+// %d -> Day of the Month
 // %m -> Month
-// %M -> Abbreviated Month
-// %d -> Month in digit form
+// %M -> Month in digit form
 // %y -> 4-digit year
-// %Y -> 2-digit year
 // %h -> Hour in 24 format
 // %H -> Hour in 12 format
 // %r -> Minutes
 // %s -> Seconds
-// %c -> Date and time representation
 // %u -> AM/PM
 // %f -> File name
-// %F -> File name and line
-// %p -> File path
-// %P -> File path and line
 // %i -> line
 // %b -> function
 // %c -> Message
@@ -36,9 +29,9 @@
 /////////////////////////////////////////////////
 //
 // The alignment modifiers:
-// '-' -> left
+// '_' -> left
 // '=' -> center
-// '_' -> right
+// '-' -> right
 //
 /////////////////////////////////////////////////
 
@@ -143,88 +136,117 @@ static void print_msg(const struct Logger logger, const struct LogEntry entry,
 
   while (*pattern) {
     if (*pattern == '%') {
+      char fmt[16] = "%";
+      char *fmt_p = fmt + 1;
+
       pattern++;
+
+      while (*pattern != '\0' && strchr("0123456789.-", *pattern)) {
+        *fmt_p++ = *pattern++;
+      }
 
       switch (*pattern) {
       case 'l':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", log_levels[entry.level]);
-        break;
-      case 'L':
-        SET_FOUR_BIT_COLOR(log_color);
-        printf("%.3s", log_levels[entry.level]);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, log_levels[entry.level]);
         break;
       case 'n':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", logger.name);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, logger.name);
         break;
       case 'c':
         SET_FOUR_BIT_COLOR(TXT_WHITE);
-        printf("%s", entry.msg);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, entry.msg);
         break;
       case 'w':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", weekdays[date.weekday]);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, weekdays[date.weekday]);
         break;
-      case 'W':
+      case 'd':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%.3s", weekdays[date.weekday]);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.day);
         break;
       case 'm':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", months[date.month]);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, months[date.month]);
         break;
       case 'M':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%.3s", months[date.month]);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.month + 1);
         break;
       case 'y':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.year);
-        break;
-      case 'Y':
-        SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.year % 100);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.year);
         break;
       case 'h':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.hour);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.hour);
         break;
       case 'H':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.hour % 12);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.hour % 12);
         break;
       case 'r':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.minute);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.minute);
         break;
       case 's':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", date.second);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, date.second);
         break;
       case 'u':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", date.meridiem);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, date.meridiem);
         break;
       case 'f':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", file);
-        break;
-      case 'F':
-        SET_FOUR_BIT_COLOR(log_color);
-        printf("%s:%d", file, line);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, file);
         break;
       case 'i':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%d", line);
+        *fmt_p++ = 'd';
+        *fmt_p = '\0';
+        printf(fmt, line);
         break;
       case 'b':
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%s", funct);
+        *fmt_p++ = 's';
+        *fmt_p = '\0';
+        printf(fmt, funct);
         break;
       default:
         SET_FOUR_BIT_COLOR(log_color);
-        printf("%%%c", *pattern);
+        *fmt_p++ = *pattern;
+        *fmt_p = '\0';
+        printf("%s", fmt);
       }
     } else {
       SET_FOUR_BIT_COLOR(log_color);
