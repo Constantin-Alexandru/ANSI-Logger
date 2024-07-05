@@ -251,27 +251,27 @@ static void print_msg(const Logger logger, const LogEntry entry,
 }
 
 #define DEBUG(logger, message)                                                 \
-  print_msg(logger, (struct LogEntry){.level = DEBUG, .msg = message},         \
-            __FILE__, __LINE__, __FUNCTION__)
+  print_msg(logger, (LogEntry){.level = DEBUG, .msg = message}, __FILE__,      \
+            __LINE__, __FUNCTION__)
 
 #define INFO(logger, message)                                                  \
-  print_msg(logger, (struct LogEntry){.level = INFO, .msg = message},          \
-            __FILE__, __LINE__, __FUNCTION__)
+  print_msg(logger, (LogEntry){.level = INFO, .msg = message}, __FILE__,       \
+            __LINE__, __FUNCTION__)
 
 #define LOG(logger, message)                                                   \
-  print_msg(logger, (struct LogEntry){.level = LOG, .msg = message}, __FILE__, \
+  print_msg(logger, (LogEntry){.level = LOG, .msg = message}, __FILE__,        \
             __LINE__, __FUNCTION__)
 
 #define SUCCESS(logger, message)                                               \
-  print_msg(logger, (struct LogEntry){.level = SUCCESS, .msg = message},       \
-            __FILE__, __LINE__, __FUNCTION__)
+  print_msg(logger, (LogEntry){.level = SUCCESS, .msg = message}, __FILE__,    \
+            __LINE__, __FUNCTION__)
 
 #define WARN(logger, message)                                                  \
-  print_msg(logger, (struct LogEntry){.level = WARN, .msg = message},          \
-            __FILE__, __LINE__, __FUNCTION__)
+  print_msg(logger, (LogEntry){.level = WARN, .msg = message}, __FILE__,       \
+            __LINE__, __FUNCTION__)
 
 #define ERR(logger, message)                                                   \
-  print_msg(logger, (struct LogEntry){.level = ERR, .msg = message}, __FILE__, \
+  print_msg(logger, (LogEntry){.level = ERR, .msg = message}, __FILE__,        \
             __LINE__, __FUNCTION__)
 
 #endif
