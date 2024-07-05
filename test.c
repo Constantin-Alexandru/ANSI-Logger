@@ -4,7 +4,7 @@ int main() {
   const char *pattern =
       "%l - %n - %m - %02H - %w %02d/%02M/%y %h:%r:%s %u - %f:%b:%i: %c";
 
-  const struct Logger logger = create_logger("Logger", pattern);
+  const Logger logger = create_logger("Logger", pattern);
 
   DEBUG(logger, "Debug");
   LOG(logger, "Log");
