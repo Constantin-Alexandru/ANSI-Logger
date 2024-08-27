@@ -68,9 +68,9 @@ const LogLevel = {
  *
  * @returns {Logger}
  */
-function create_logger(name, pattern) {
+exports.create_logger = function (name, pattern) {
   return { name: name, pattern: pattern };
-}
+};
 
 /**
  * Returns the string corresponding to the ANSI Code for the level color.
