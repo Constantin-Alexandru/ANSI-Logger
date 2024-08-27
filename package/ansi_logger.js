@@ -136,7 +136,10 @@ function print_msg(logger, entry) {
   const message = logger.pattern
     .replace("%l", `${log_color}${level_str}`)
     .replace("%n", `${log_color}${logger.name}`)
-    .replace("%w", `${log_color}${date.getDay()}`)
+    .replace(
+      "%w",
+      `${log_color}${date.toLocaleString("default", { weekday: "long" })}`,
+    )
     .replace("%d", `${log_color}${date.getDate()}`)
     .replace(
       "%m",
