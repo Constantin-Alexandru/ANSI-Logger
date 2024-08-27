@@ -19,19 +19,19 @@ Object.defineProperty(global, "__stack", {
 
 Object.defineProperty(global, "__parent_line", {
   get: function () {
-    return __stack[2].getLineNumber();
+    return __stack[3].getLineNumber() ?? "top_level";
   },
 });
 
 Object.defineProperty(global, "__parent_function", {
   get: function () {
-    return __stack[2].getFunctionName();
+    return __stack[3].getFunctionName() ?? "top_level";
   },
 });
 
 Object.defineProperty(global, "__parent_file", {
   get: function () {
-    return __stack[2].getFileName();
+    return __stack[3].getFileName().split("\\").pop() ?? "top_level";
   },
 });
 
@@ -133,30 +133,28 @@ function print_msg(logger, entry) {
   const level_str = getLogLevelString(entry.level);
   const date = new Date();
 
-  const message = pattern
-    .replace("%l", `${log_color}${level_str}${default_color}`)
-    .replace("%n", `${log_color}${logger.name}${default_color}`)
-    .replace("%w", `${log_color}${date.getDay()}${default_color}`)
-    .replace("%d", `${log_color}${date.getDate()}${default_color}`)
+  const message = logger.pattern
+    .replace("%l", `${log_color}${level_str}`)
+    .replace("%n", `${log_color}${logger.name}`)
+    .replace("%w", `${log_color}${date.getDay()}`)
+    .replace("%d", `${log_color}${date.getDate()}`)
     .replace(
       "%m",
-      `${log_color}\
-${date.toLocaleString("default", { month: "long" })}${default_color}`,
+      `${log_color}${date.toLocaleString("default", { month: "long" })}`,
     )
-    .replace("%M", `${log_color}${date.getMonth()}${default_color}`)
-    .replace("%y", `${log_color}${date.getFullYear()}${default_color}`)
-    .replace("%h", `${log_color}${date.getHours()}${default_color}`)
-    .replace("%H", `${log_color}${date.getHours() % 12}${default_color}`)
-    .replace("%r", `${log_color}${date.getMinutes()}${default_color}`)
-    .replace("%s", `${log_color}${date.getSeconds()}${default_color}`)
-    .replace(
-      "%u",
-      `${log_color}${date.getHours() >= 12 ? "PM" : "AM"}${default_color}`,
-    )
-    .replace("%f", `${log_color}${__parent_file}${default_color}`)
-    .replace("%i", `${log_color}${__parent_line}${default_color}`)
-    .replace("%b", `${log_color}${__parent_function}${default_color}`)
+    .replace("%M", `${log_color}${date.getMonth()}`)
+    .replace("%y", `${log_color}${date.getFullYear()}`)
+    .replace("%h", `${log_color}${date.getHours()}`)
+    .replace("%H", `${log_color}${date.getHours() % 12}`)
+    .replace("%r", `${log_color}${date.getMinutes()}`)
+    .replace("%s", `${log_color}${date.getSeconds()}`)
+    .replace("%u", `${log_color}${date.getHours() >= 12 ? "PM" : "AM"}`)
+    .replace("%f", `${log_color}${__parent_file}`)
+    .replace("%i", `${log_color}${__parent_line}`)
+    .replace("%b", `${log_color}${__parent_function}`)
     .replace("%c", `${default_color}${entry.msg}`);
+
+  process.stdout.write(message);
 }
 
 /**
