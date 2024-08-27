@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/Constantin-Alexandru/ANSI-Logger#readme",
   "dependencies": {
-    "ansi-lib": "^1.2.0"
+    "ansi-lib": "^1.3.1"
   }
 }
