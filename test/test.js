@@ -1,7 +1,13 @@
-const ansi_logger = require("ansi-logger/ansi_logger");
+const ansi_logger = require("logger-ansi");
 
-ansi_logger.log("Log");
-ansi_logger.info("Info");
-ansi_logger.success("Success");
-ansi_logger.warn("Warn");
-ansi_logger.error("Error");
+const logger = ansi_logger.create_logger(
+  "Logger",
+  "%l - %n - %m - %H - %w %d/%M/%y %h:%r:%s %u - %f:%b:%i: %c\n",
+);
+
+ansi_logger.DEBUG(logger, "Debug");
+ansi_logger.INFO(logger, "Info");
+ansi_logger.LOG(logger, "Log");
+ansi_logger.SUCCESS(logger, "Success");
+ansi_logger.WARN(logger, "Warn");
+ansi_logger.ERROR(logger, "Error");
